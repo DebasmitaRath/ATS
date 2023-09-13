@@ -37,14 +37,11 @@ public class BuManager {
 	// JOIN WITH USERS
 	private int empid;
 	private String experienceLevel;
-	private Set<String> modeOfWork;
+	private String modeOfWork;
 	private String jobDescription;
 	private String ctcOfferDetails;
 	private String workLocation;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "buManager")
-	private List<Division> division = new ArrayList<>();
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Skill> skills = new ArrayList<>();
+	private Long divisionId;
+	private Long skillId;
 }

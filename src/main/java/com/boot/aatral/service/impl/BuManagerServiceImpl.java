@@ -1,6 +1,10 @@
 package com.boot.aatral.service.impl;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +12,12 @@ import org.springframework.stereotype.Service;
 
 import com.boot.aatral.dto.BuManagerDto;
 import com.boot.aatral.entity.BuManager;
+import com.boot.aatral.entity.Division;
+import com.boot.aatral.entity.Skill;
 import com.boot.aatral.exception.ResourceNotFoundException;
 import com.boot.aatral.repository.BuManagerRepository;
+import com.boot.aatral.repository.DivisionRepository;
+import com.boot.aatral.repository.SkillRepository;
 import com.boot.aatral.service.BuManagerService;
 
 @Service
@@ -17,6 +25,12 @@ public class BuManagerServiceImpl implements BuManagerService {
 
 	@Autowired
 	private BuManagerRepository buManagerRepository;
+
+	@Autowired
+	private SkillRepository skillRepository;
+
+	@Autowired
+	private DivisionRepository divisionRepository;
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -35,7 +49,7 @@ public class BuManagerServiceImpl implements BuManagerService {
 		buManager2.setContactNumber(buManagerDto.getContactNumber());
 		buManager2.setCtcOfferDetails(buManagerDto.getCtcOfferDetails());
 		buManager2.setDesignation(buManagerDto.getDesignation());
-		buManager2.setDivision(buManagerDto.getDivision());
+		buManager2.setDivisionId(buManagerDto.getDivisionId());
 		buManager2.setEmail(buManagerDto.getEmail());
 		buManager2.setEmpid(buManagerDto.getEmpid());
 		buManager2.setExperienceLevel(buManagerDto.getExperienceLevel());
@@ -44,7 +58,7 @@ public class BuManagerServiceImpl implements BuManagerService {
 		buManager2.setRequestorName(buManagerDto.getRequestorName());
 		buManager2.setRequestResourceDate(buManagerDto.getRequestResourceDate());
 		buManager2.setResourceStartDate(buManagerDto.getResourceStartDate());
-		buManager2.setSkills(buManagerDto.getSkills());
+		buManager2.setSkillId(buManagerDto.getSkillId());
 		buManager2.setModeOfWork(buManagerDto.getModeOfWork());
 		buManager2.setNumberOfPositions(buManagerDto.getNumberOfPositions());
 		buManager2.setCtcOfferDetails(buManagerDto.getCtcOfferDetails());
@@ -87,5 +101,49 @@ public class BuManagerServiceImpl implements BuManagerService {
 		BuManagerDto buManagerDto = this.modelMapper.map(buManager, BuManagerDto.class);
 		return buManagerDto;
 
+	}
+
+	@Override
+	public List<Skill> getAllSkills() {
+		List<Skill> allSkills = this.skillRepository.findAll();
+		return allSkills;
+	}
+
+	@Override
+	public Skill getSkillById(Long skillId) {
+		Skill skill = this.skillRepository.findById(skillId)
+				.orElseThrow(() -> new ResourceNotFoundException("Skills", "SkillId", skillId));
+		return skill;
+	}
+
+	@Override
+	public Map<Long, String> getAllDivisions() {
+		HashMap<Long, String> divisions = new HashMap<>();
+		List<Division> allDivisions = this.divisionRepository.findAll();
+
+		for (Division item : allDivisions) {
+			Long divisionId = item.getDivisionId();
+			String divisionName = item.getDivisionName();
+			divisions.put(divisionId, divisionName);
+		}
+		return divisions;
+	}
+
+	@Override
+	public Division getDivisionById(Long divId) {
+		Division division = this.divisionRepository.findById(divId)
+				.orElseThrow(() -> new ResourceNotFoundException("Division", "Division Id", divId));
+		return division;
+	}
+
+	@Override
+	public Map<Long, String> loadSkills(Long divId) {
+		List<Skill> skills = this.skillRepository.findByDivisionId(divId);
+		HashMap<Long, String> divisions = new HashMap<>();
+
+		for (Skill item : skills) {
+			divisions.put(item.getSkillId(), item.getSkillName());
+		}
+		return divisions;
 	}
 }

@@ -30,10 +30,13 @@ public class BuManagerDto {
 	// JOIN WITH USERS
 	private int empid;
 	private String experienceLevel;
-	private Set<String> modeOfWork;
+	private String modeOfWork;
 	private String jobDescription;
 	private String ctcOfferDetails;
 	private String workLocation;
-	private List<Division> division = new ArrayList<>();
-	private List<Skill> skills = new ArrayList<>();
+//	private List<Division> division = new ArrayList<>();
+//	private List<Skill> skills = new ArrayList<>();
+
+	private Long divisionId;
+	private Long skillId;
 }

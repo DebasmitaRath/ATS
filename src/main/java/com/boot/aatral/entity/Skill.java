@@ -23,10 +23,11 @@ public class Skill {
 
 	private String skillName;
 
-	@ManyToOne
-	private Division division;
-
-	@ManyToOne
-	private BuManager buManager;
+	private Long divisionId;
+//	@ManyToOne
+//	private Division division;
+//
+//	@ManyToOne
+//	private BuManager buManager;
 
 }

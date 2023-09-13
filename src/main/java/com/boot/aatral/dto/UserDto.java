@@ -33,9 +33,6 @@ public class UserDto {
 	@Size(min = 5, message = "Password should have at least 5 chsracters !!!")
 	private String password;
 
-	@NotEmpty
-	@Size(min = 10, message = "Description should have at least 10 chsracters !!!")
-	private String description;
 	private String contactno;
 
 	@NotEmpty
@@ -43,5 +40,5 @@ public class UserDto {
 	private String address;
 	private Roles roles;
 	private Boolean isactive;
-	private Set<String> client;
+//	private Set<String> client;
 }
