@@ -27,12 +27,14 @@ public class Division {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long divisionId;
     private String divisionName;
+    
+//    private Long skillId;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "division")
-    private List<Skill> skills= new ArrayList<>();
+//    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "division")
+//    private List<Skill> skills= new ArrayList<>();
 
-    @ManyToOne
-    private BuManager buManager;
+//    @ManyToOne
+//    private BuManager buManager;
     
 }
 

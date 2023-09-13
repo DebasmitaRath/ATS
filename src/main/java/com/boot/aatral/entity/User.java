@@ -25,7 +25,7 @@ public class User {
 	private String contactno;
 	private String address;
 	@Enumerated(EnumType.STRING)
-	private Roles role;
-	private Set<String> client;
+	private Roles role= Roles.BU_MANAGER;
+//	private Set<String> client;
 	private boolean isactive;
 }
